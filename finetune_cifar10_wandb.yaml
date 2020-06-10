@@ -8,6 +8,7 @@ parameters:
     distribution: categorical
     values:
       - 0.0
+      - 0.001
       - 0.0001
 
 command:
@@ -18,7 +19,7 @@ command:
   - "--train_mode=finetune"
   - "--fine_tune_after_block=4"
   - "--zero_init_logits_layer=True"
-  - "--variable_schema='(?!global_step|(?:.*/|^)LARSOptimizer|head)'"
+  - "--variable_schema=(?!global_step|(?:.*/|^)LARSOptimizer|head)"
   - "--global_bn=False"
   - "--optimizer=momentum"
   - "--learning_rate=0.1"

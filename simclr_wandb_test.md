@@ -1,13 +1,8 @@
 ## Test [simclr](https://paperswithcode.com/paper/a-simple-framework-for-contrastive-learning) with [Weights & Biases](https://www.wandb.com)
 
-This document is a step-by-step guide to reproduce a problem when using W&B for hyperparameter tuning. This might be
-a specific problem when W&B is used for simclr. In the hope of finding the root cause of the issue, this document is
-an effort to allow the problem to be easily reproducible.
+This document is a step-by-step guide to do hyperparameter tuning for simclr using W&B.
 
-### Summary of the problem
-
-When using wandb for grid search sweep of hyperparameters during simclr finetuning step, accuracy drops drastically and
-systematically. For the same set of parameters, the accuracy drops from over 90% to below 30%. 
+### Summary of the changes
 
 The change to add wandb API calls is minimal, from [run.py](run.py) (without using wandb) to 
 [run_sweep.py](run_sweep.py) (with wandb). There is only one additional dependency in the docker environment:
@@ -57,7 +52,10 @@ Use the example sweep configuration in [finetune_cifar10_wandb.yaml](finetune_ci
 ```shell script
 make create_sweep WANDB_DIR=... WANDB_USERNAME=... WANDB_API_KEY=... WANDB_PROJECT=simclr SWEEP_CONFIG=...
 ```
-
+Make sure that the single quotes are removed in the configuration for
+```yaml
+--variable_schema=(?!global_step|(?:.*/|^)LARSOptimizer|head))
+```
 Record the sweep id, and use it in the next section.
 
 ### Start W&B sweep
@@ -77,3 +75,9 @@ make start_sweep WANDB_DIR=... WANDB_USERNAME=... WANDB_API_KEY=... WANDB_PROJEC
 <div align="center">
   Finetune Result for CIFAR10 with W&B Sweep
 </div>
+
+Weight Decay | Clock Time | Top 1 Label Accuracy | Top 5 Label Accuracy
+:--- | :--- | :--- | :---
+0 | 14m | 0.9116 | 0.9975
+0.001 | 14m | 0.9073 | 0.9974
+0.00001 | 14m | 0.9116 | 0.9976

@@ -426,7 +426,8 @@ def main(argv):
           num_classes=num_classes)
 
       for k, v in result.items():
-          wandb.run.summary[k] = float(v)
+          wandb.log({k: float(v)}, commit=False)
+      wandb.log()  # Calling wandb.log without any arguments sets commit=True and flushes the metrics
 
 
 if __name__ == '__main__':
