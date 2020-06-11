@@ -73,11 +73,13 @@ make start_sweep WANDB_DIR=... WANDB_USERNAME=... WANDB_API_KEY=... WANDB_PROJEC
 
 ![Finetune Result for CIFAR10 with W&B Sweep](wandb_metric.png)
 <div align="center">
-  Finetune Result for CIFAR10 with W&B Sweep
+  Sample Finetune Result for CIFAR10 with W&B Sweep
+  <p/>
 </div>
 
 Weight Decay | Clock Time | Top 1 Label Accuracy | Top 5 Label Accuracy
 :--- | :--- | :--- | :---
-0 | 14m | 0.9116 | 0.9975
-0.001 | 14m | 0.9073 | 0.9974
+0.0 | 14m | 0.9116 | 0.9975
 0.00001 | 14m | 0.9116 | 0.9976
+0.001 | 14m | 0.9073 | 0.9974
+
